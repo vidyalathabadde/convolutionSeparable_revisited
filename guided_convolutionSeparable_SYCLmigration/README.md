@@ -38,7 +38,7 @@ This sample is migrated from the NVIDIA CUDA sample. See the sample [convolution
 |:---                   |:---
 | OS                    | Ubuntu* 22.04
 | Hardware              | Intel® Gen9 <br> Intel® Gen11 <br> Intel® Xeon CPU <br> Intel® Data Center GPU Max <br> NVIDIA Tesla P100 <br> NVIDIA A100 <br> NVIDIA H100
-| Software                | SYCLomatic (Tag - 20230720) <br> Intel® oneAPI Base Toolkit version 2023.2.1 <br> oneAPI for NVIDIA GPUs" plugin from Codeplay
+| Software                | SYCLomatic (Tag - 20230720) <br> Intel® oneAPI Base Toolkit version 2024.0.0 <br> oneAPI for NVIDIA GPUs" plugin from Codeplay
 
 For more information on how to install Syclomatic Tool & DPC++ CUDA® plugin, visit [Migrate from CUDA* to C++ with SYCL*](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/migrate-from-cuda-to-cpp-with-sycl.html#gs.v354cy) <br>
 [Install oneAPI for NVIDIA GPUs](https://developer.codeplay.com/products/oneapi/nvidia/)
@@ -161,58 +161,7 @@ the `VERBOSE=1` argument:
 ```
 make VERBOSE=1
 ```
-If you receive an error message, troubleshoot the problem using the **Diagnostics Utility for Intel® oneAPI Toolkits**. The diagnostic utility provides configuration and system checks to help find missing dependencies, permissions errors, and other issues. See the [Diagnostics Utility for Intel® oneAPI Toolkits User Guide](https://www.intel.com/content/www/us/en/develop/documentation/diagnostic-utility-user-guide/top.html) for more information on using the utility.
-
-
-## Example output
-
-dpct_output
-
-```
-Image Width x Height = 3072 x 3072
-
-Allocating and initializing host arrays...
-Allocating and initializing CUDA arrays...
-Running GPU convolution (16 identical iterations)...
-
-convolutionSeparable, Throughput = 8516.3535 MPixels/sec, Time = 0.00111 s, Size = 9437184 Pixels, NumDevsUsed = 1, Workgroup = 0
-
-Reading back GPU results...
-
-Checking the results...
- ...running convolutionRowCPU()
- ...running convolutionColumnCPU()
- ...comparing the results
- ...Relative L2 norm: 0.000000E+00
-
-Shutting down...
-Test passed
-Built target run
-```
-
-sycl_migrated_optimized
-
-```
-Image Width x Height = 3072 x 3072
-
-Allocating and initializing host arrays...
-Allocating and initializing CUDA arrays...
-Running GPU convolution (16 identical iterations)...
-
-convolutionSeparable, Throughput = 18253.7401 MPixels/sec, Time = 0.00052 s, Size = 9437184 Pixels, NumDevsUsed = 1, Workgroup = 0
-
-Reading back GPU results...
-
-Checking the results...
- ...running convolutionRowCPU()
- ...running convolutionColumnCPU()
- ...comparing the results
- ...Relative L2 norm: 0.000000E+00
-
-Shutting down...
-Test passed
-Built target run_smo
-```
+If you receive an error message, troubleshoot the problem using the **Diagnostics Utility for Intel® oneAPI Toolkits**. The diagnostic utility provides configuration and system checks to help find missing dependencies, permissions errors, and other issues. See the [Diagnostics Utility for Intel® oneAPI Toolkits User Guide](https://www.intel.com/content/www/us/en/docs/oneapi/user-guide-diagnostic-utility/2024-0/overview.html) for more information on using the utility.
 
 ## License
 Code samples are licensed under the MIT license. See
