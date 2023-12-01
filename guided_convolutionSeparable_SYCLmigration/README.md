@@ -70,8 +70,9 @@ For this sample, the SYCLomatic tool automatically migrates 100% of the CUDA run
    ```
    intercept-build make
    ```
-4. The above step creates a JSON file named compile_commands.json with all the compiler invocations and stores the names of the input files and the compiler options.
-5. Pass the JSON file as input to the Intel® SYCLomatic Compatibility Tool. The result is written to a folder named dpct_output. The --in-root specifies path to the root of the source tree to be migrated. The --gen-helper-function option will make a copy of dpct header files/functions used in the migrated code into the dpct_output folder as include folder.
+   The above step creates a JSON file named compile_commands.json with all the compiler invocations and stores the names of the input files and the compiler options.
+
+4. Pass the JSON file as input to the Intel® SYCLomatic Compatibility Tool. The result is written to a folder named dpct_output. The --in-root specifies path to the root of the source tree to be migrated. The --gen-helper-function option will make a copy of dpct header files/functions used in the migrated code into the dpct_output folder as include folder.
    ```
    c2s -p compile_commands.json --in-root ../../.. --gen-helper-function
    ```
