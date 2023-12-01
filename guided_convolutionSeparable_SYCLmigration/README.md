@@ -22,16 +22,6 @@ This sample contains two versions in the following folders:
 | `01_dpct_output`              | Contains the output of SYCLomatic Tool which is a fully migrated version of CUDA code.
 | `02_sycl_migrated_optimized`            | Contains the optimized sycl code
 
-## Workflow For CUDA to SYCL migration
-
-Refer [Workflow](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/cuda-sycl-migration-workflow.html#gs.s2njvh) for details.
-
-## CUDA source code evaluation
-
-A Separable Convolution is a process in which a single convolution can be divided into two or more convolutions to produce the same output. This sample implements a separable convolution filter of a 2D image with an arbitrary kernel. There are two functions in the code named convolutionRowsGPU and convolutionColumnsGPU in which the kernel functions (convolutionRowsKernel & convolutionColumnsKernel) are called where the loading of the input data and computations are performed. We validate the results with reference CPU separable convolution implementation by calculating the relative L2 norm.
-
-This sample is migrated from the NVIDIA CUDA sample. See the sample [convolutionSeparable](https://github.com/NVIDIA/cuda-samples/tree/master/Samples/2_Concepts_and_Techniques/convolutionSeparable) in the NVIDIA/cuda-samples GitHub.
-
 ## Prerequisites
 
 | Optimized for              | Description
@@ -40,8 +30,7 @@ This sample is migrated from the NVIDIA CUDA sample. See the sample [convolution
 | Hardware              | Intel® Gen9 <br> Intel® Gen11 <br> Intel® Xeon CPU <br> Intel® Data Center GPU Max <br> NVIDIA Tesla P100 <br> NVIDIA A100 <br> NVIDIA H100
 | Software                | SYCLomatic (Tag - 20230720) <br> Intel® oneAPI Base Toolkit version 2024.0.0 <br> oneAPI for NVIDIA GPUs" plugin from Codeplay
 
-For more information on how to install Syclomatic Tool & DPC++ CUDA® plugin, visit [Migrate from CUDA* to C++ with SYCL*](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/migrate-from-cuda-to-cpp-with-sycl.html#gs.v354cy) <br>
-[Install oneAPI for NVIDIA GPUs](https://developer.codeplay.com/products/oneapi/nvidia/)
+For more information on how to install Syclomatic Tool & DPC++ CUDA® plugin, visit [Migrate from CUDA* to C++ with SYCL*](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/migrate-from-cuda-to-cpp-with-sycl.html#gs.v354cy) <br> How to run SYCL™ applications on NVIDIA® GPUs, refer to oneAPI for NVIDIA GPUs plugin from Codeplay [Install oneAPI for NVIDIA GPUs](https://developer.codeplay.com/products/oneapi/nvidia/)
 
 ## Key Implementation Details
 
@@ -50,20 +39,22 @@ This sample demonstrates the migration of the following CUDA features:
 - Shared memory
 - Constant memory
 - Cooperative groups
+  
+>  **Note**: Refer to [Workflow for a CUDA* to SYCL* Migration](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/cuda-sycl-migration-workflow.html#gs.s2njvh) for general information about the migration workflow.
 
-## Build the `convolutionSeparable` Sample for CPU and GPU
+## CUDA source code evaluation
 
-> **Note**: If you have not already done so, set up your CLI
-> environment by sourcing  the `setvars` script in the root of your oneAPI installation.
->
-> Linux*:
-> - For system wide installations: `. /opt/intel/oneapi/setvars.sh`
-> - For private installations: ` . ~/intel/oneapi/setvars.sh`
-> - For non-POSIX shells, like csh, use the following command: `bash -c 'source <install-dir>/setvars.sh ; exec csh'`
->
-> For more information on configuring environment variables, see [Use the setvars Script with Linux* or macOS*](https://www.intel.com/content/www/us/en/develop/documentation/oneapi-programming-guide/top/oneapi-development-environment-setup/use-the-setvars-script-with-linux-or-macos.html).
+A Separable Convolution is a process in which a single convolution can be divided into two or more convolutions to produce the same output. This sample implements a separable convolution filter of a 2D image with an arbitrary kernel. There are two functions in the code named convolutionRowsGPU and convolutionColumnsGPU in which the kernel functions (convolutionRowsKernel & convolutionColumnsKernel) are called where the loading of the input data and computations are performed. We validate the results with reference CPU separable convolution implementation by calculating the relative L2 norm.
 
-### Tool assisted migration – SYCLomatic 
+This sample is migrated from the NVIDIA CUDA sample. See the sample [convolutionSeparable](https://github.com/NVIDIA/cuda-samples/tree/master/Samples/2_Concepts_and_Techniques/convolutionSeparable) in the NVIDIA/cuda-samples GitHub.
+
+## Set Environment Variables
+
+When working with the command-line interface (CLI), you should configure the oneAPI toolkits using environment variables. Set up your CLI environment by sourcing the `setvars` script every time you open a new terminal window. This practice ensures that your compiler, libraries, and tools are ready for development.
+
+## Migrate the `convolutionSeparable` Sample
+
+### Migrate the Code using SYCLomatic
 
 For this sample, the SYCLomatic tool automatically migrates 100% of the CUDA runtime API's to SYCL. Follow these steps to generate the SYCL code using the compatibility tool:
 
@@ -78,7 +69,7 @@ For this sample, the SYCLomatic tool automatically migrates 100% of the CUDA run
    ```
    c2s -p compile_commands.json --in-root ../../.. --gen-helper-function
    ```
-#### Manual Workaround
+### Manual Workaround
 To find the device on which the code is getting executed replace the `findCudaDevice (argc, (const char **) argv);` with the following sycl get_device() API
 ```
 std::cout << "\nRunning on " << dpct::get_default_queue().get_device().get_info<sycl::info::device::name>()
@@ -113,6 +104,18 @@ We can separate the array and load it into another new array and use it in place
   ```
 >**Note**: These optimization techniques also work with the larger input image sizes.
 
+## Build the `convolutionSeparable` Sample for CPU and GPU
+
+> **Note**: If you have not already done so, set up your CLI
+> environment by sourcing  the `setvars` script in the root of your oneAPI installation.
+>
+> Linux*:
+> - For system wide installations: `. /opt/intel/oneapi/setvars.sh`
+> - For private installations: ` . ~/intel/oneapi/setvars.sh`
+> - For non-POSIX shells, like csh, use the following command: `bash -c 'source <install-dir>/setvars.sh ; exec csh'`
+>
+> For more information on configuring environment variables, see [Use the setvars Script with Linux* or macOS*](https://www.intel.com/content/www/us/en/develop/documentation/oneapi-programming-guide/top/oneapi-development-environment-setup/use-the-setvars-script-with-linux-or-macos.html).
+
 ### On Linux*
 
 1. Change to the sample directory.
@@ -140,7 +143,7 @@ By default, this command sequence will build the `dpct_output` as well as `sycl_
       ```
       Run `dpct_output` on CPU.
       ```
-      export ONEAPI_DEVICE_SELECTOR=cpu
+      export ONEAPI_DEVICE_SELECTOR=opencl:cpu
       make run
       unset ONEAPI_DEVICE_SELECTOR
       ```
@@ -150,7 +153,7 @@ By default, this command sequence will build the `dpct_output` as well as `sycl_
       ```
       Run `sycl_migrated_optimized` on CPU.
       ```
-      export ONEAPI_DEVICE_SELECTOR=cpu
+      export ONEAPI_DEVICE_SELECTOR=opencl:cpu
       make run_smo
       unset ONEAPI_DEVICE_SELECTOR
       ```
