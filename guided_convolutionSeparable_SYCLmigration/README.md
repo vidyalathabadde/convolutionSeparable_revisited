@@ -58,8 +58,14 @@ When working with the command-line interface (CLI), you should configure the one
 
 For this sample, the SYCLomatic tool automatically migrates 100% of the CUDA runtime API's to SYCL. Follow these steps to generate the SYCL code using the compatibility tool:
 
-1. git clone https://github.com/NVIDIA/cuda-samples.git
-2. cd cuda-samples/Samples/2_Concepts_and_Techniques/convolutionSeparable/
+1. Clone the required GitHub repository to your local environment.
+   ```
+   git clone https://github.com/NVIDIA/cuda-samples.git
+   ```
+2. Change to the convolutionSeparable sample directory.
+   ```
+   cd cuda-samples/Samples/2_Concepts_and_Techniques/convolutionSeparable/
+   ```
 3. Generate a compilation database with intercept-build
    ```
    intercept-build make
@@ -133,7 +139,7 @@ We can separate the array and load it into another new array and use it in place
    
 By default, this command sequence will build the `dpct_output` as well as `sycl_migrated_optimized` versions of the program.
 
-4. Run the code
+3. Run the code
 
    You can run the programs for CPU and GPU. The commands indicate the device target.
 
